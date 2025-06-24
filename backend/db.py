@@ -4,24 +4,51 @@ import psycopg2
 from fastapi import FastAPI
 
 
-# Database connection function
+# # Database connection function
+# def get_db_connection():
+#     return psycopg2.connect(
+#         database="HostelDB",
+#         user="postgres",
+#         password="Khan@123",
+#         host="localhost",
+#         port="5433"
+#     )
+    
+    
+# # PostgreSQL connection
+# conn = psycopg2.connect(
+#     database="HostelDB",
+#     user="postgres",
+#     password="Khan@123",
+#     host="localhost",
+#     port="5433"
+# )
+# conn.autocommit = True
+# cursor = conn.cursor()
+
+# # Drop old tables
+# cursor.execute("DROP TABLE IF EXISTS Complaint, UserAuth, Student, Room, Warden, Hostel CASCADE")
+
+
+import psycopg2
+
+# Database connection function for Render
 def get_db_connection():
     return psycopg2.connect(
-        database="HostelDB",
-        user="postgres",
-        password="Khan@123",
-        host="localhost",
-        port="5433"
+        database="hosteldb_bw4x",
+        user="khan",
+        password="OEqqvJAghwAIs9laObfPpTcDO7mNGVHt",
+        host="dpg-d1d3koqdbo4c73cc1uv0-a.oregon-postgres.render.com",
+        port="5432"  # default PostgreSQL port
     )
-    
-    
-# PostgreSQL connection
+
+# PostgreSQL connection to Render
 conn = psycopg2.connect(
-    database="HostelDB",
-    user="postgres",
-    password="Khan@123",
-    host="localhost",
-    port="5433"
+    database="hosteldb_bw4x",
+    user="khan",
+    password="OEqqvJAghwAIs9laObfPpTcDO7mNGVHt",
+    host="dpg-d1d3koqdbo4c73cc1uv0-a.oregon-postgres.render.com",
+    port="5432"
 )
 conn.autocommit = True
 cursor = conn.cursor()
