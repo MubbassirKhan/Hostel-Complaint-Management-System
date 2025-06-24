@@ -161,4 +161,4 @@ user_auths = [(shid[0], f"pswd@{shid[0]}") for shid in shids]
 conn.commit()
 cursor.close()
 conn.close()
-print("✅ Tables created and 20 students + credentials inserted.")
+print("Tables created and 20 students + credentials inserted.")

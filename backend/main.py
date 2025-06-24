@@ -3,11 +3,12 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from wardan import router as warden_router
-from admin import router as admin_router
+from .wardan import router as warden_router
+from .admin import router as admin_router
+from .db import get_db_connection  # ✅ make sure get_db_connection is importable
 
 
-from db import get_db_connection  # ✅ make sure get_db_connection is importable
+
 # Initialize FastAPI app
 app = FastAPI()
 app.add_middleware(SessionMiddleware, secret_key="your-very-secret-key")
