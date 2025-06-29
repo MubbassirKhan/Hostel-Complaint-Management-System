@@ -2,13 +2,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
-  FaBars,
   FaChevronCircleLeft,
   FaChevronCircleRight,
   FaTachometerAlt,
   FaUsers,
   FaComments,
   FaCog,
+  FaUserTie,
   FaSignOutAlt,
 } from "react-icons/fa";
 import axios from "axios";
@@ -33,11 +33,22 @@ const AdminSidebar = () => {
     }
   };
 
+  /* ───────── links (with wardens + guarded settings) ───────── */
   const links = [
-    { to: "/admin/welcome", label: "Dashboard", icon: <FaTachometerAlt /> },
-    { to: "/admin/users", label: "Manage Users", icon: <FaUsers /> },
-    { to: "/admin/complaints", label: "Complaints", icon: <FaComments /> },
-    { to: "/admin/settings", label: "Settings", icon: <FaCog /> },
+    { to: "/admin/welcome",    label: "Dashboard",    icon: <FaTachometerAlt /> },
+    { to: "/admin/users",      label: "Manage Users", icon: <FaUsers /> },
+    { to: "/admin/wardens",    label: "Wardens",      icon: <FaUserTie /> },
+    { to: "/admin/complaints", label: "Complaints",   icon: <FaComments /> },
+    {
+      to: "/admin/settings",
+      label: "Settings",
+      icon: <FaCog />,
+      /* extra guard — ask before leaving */
+      onGuard: () =>
+        window.confirm(
+          "You’re about to open Admin Settings. Continue only if this screen isn’t visible to students/wardens."
+        ),
+    },
   ];
 
   return (
@@ -48,9 +59,13 @@ const AdminSidebar = () => {
           isOpen ? "w-64" : "w-20"
         }`}
       >
-        {/* Sidebar Header */}
+        {/* Header */}
         <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <span className={`text-xl font-bold transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 hidden"}`}>
+          <span
+            className={`text-xl font-bold transition-opacity duration-300 ${
+              isOpen ? "opacity-100" : "opacity-0 hidden"
+            }`}
+          >
             Admin Panel
           </span>
           <button
@@ -61,37 +76,53 @@ const AdminSidebar = () => {
           </button>
         </div>
 
-        {/* Nav Links */}
+        {/* Nav */}
         <nav className="flex flex-col p-4 space-y-3">
-          {links.map((link, index) => (
+          {links.map(({ to, label, icon, onGuard }) => (
             <Link
-              key={index}
-              to={link.to}
+              key={to}
+              to={to}
+              onClick={(e) => {
+                if (onGuard && !onGuard()) e.preventDefault();
+              }}
               className={`flex items-center gap-4 p-3 rounded-lg transition-colors hover:bg-gray-700 ${
-                location.pathname === link.to ? "bg-gray-700" : ""
+                location.pathname === to ? "bg-gray-700" : ""
               }`}
             >
-              <span className="text-xl">{link.icon}</span>
-              <span className={`transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 hidden"}`}>
-                {link.label}
+              <span className="text-xl">{icon}</span>
+              <span
+                className={`transition-opacity duration-300 ${
+                  isOpen ? "opacity-100" : "opacity-0 hidden"
+                }`}
+              >
+                {label}
               </span>
             </Link>
           ))}
 
+          {/* Logout */}
           <button
             onClick={handleLogout}
             className="flex items-center gap-4 text-red-400 hover:text-red-500 p-3 rounded-lg transition-all"
           >
             <FaSignOutAlt className="text-xl" />
-            <span className={`transition-opacity duration-300 ${isOpen ? "opacity-100" : "opacity-0 hidden"}`}>
+            <span
+              className={`transition-opacity duration-300 ${
+                isOpen ? "opacity-100" : "opacity-0 hidden"
+              }`}
+            >
               Logout
             </span>
           </button>
         </nav>
       </div>
 
-      {/* Content Padding */}
-      <div className={`transition-all duration-300 ${isOpen ? "ml-64" : "ml-20"}`} />
+      {/* content spacer */}
+      <div
+        className={`transition-all duration-300 ${
+          isOpen ? "ml-64" : "ml-20"
+        }`}
+      />
     </div>
   );
 };

@@ -6,6 +6,9 @@ import Footer from "./components/Footer";
 import Hero from "./components/Hero";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminProtectedRoute from "./components/AdminProtectedRoute";
+import AdminWardens from "./components/AdminWardens";
+import AdminComplaints from "./components/AdminComplaints";
+import AdminSettings from "./components/AdminSettings";
 
 // Importing pages
 import AdminLogin from "./pages/AdminLogin";
@@ -53,6 +56,10 @@ function App() {
             }
           />
           <Route path="/admin/users" element={<AdminUsers />} />
+          <Route path="/admin/wardens" element={<AdminWardens />} />
+          <Route path="/admin/complaints" element={<AdminComplaints />} />
+          <Route path="/admin/settings" element={<AdminSettings />} />
+
 
           {/* Catch-all route */}
         </Routes>

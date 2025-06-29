@@ -3,9 +3,9 @@ from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.sessions import SessionMiddleware
-from .wardan import router as warden_router
-from .admin import router as admin_router
-from .db import get_db_connection  # ✅ make sure get_db_connection is importable
+from wardan import router as warden_router
+from admin import router as admin_router
+from db import get_db_connection  # ✅ make sure get_db_connection is importable
 
 
 
